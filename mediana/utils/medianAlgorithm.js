@@ -3,24 +3,20 @@ function findKthSmallest(arr, k) {
     return arr[0];
   }
 
-  // Divide the array into groups of 5
   const groups = [];
   for (let i = 0; i < arr.length; i += 5) {
     groups.push(arr.slice(i, i + 5));
   }
 
-  // Find the median of each group
   const medians = groups.map(
     (group) => group.sort((a, b) => a - b)[Math.floor(group.length / 2)]
   );
 
-  // Recursively find the median of medians
   const medianOfMedians = findKthSmallest(
     medians,
     Math.floor(medians.length / 2)
   );
 
-  // Partition the array around the median of medians
   const pivotIndex = arr.indexOf(medianOfMedians);
   const smaller = arr.filter(
     (element, index) =>
